@@ -1,6 +1,4 @@
 #ddev-generated
-version: '3.6'
-
 services:
   php8.5:
     container_name: ddev-${DDEV_SITENAME}-php8.5

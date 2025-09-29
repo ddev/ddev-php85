@@ -1,0 +1,11 @@
+# Actions setup steps for the PHP 8.5 add-on
+# This allows the tests to access external resources required for building and testing
+
+# Allow access to package repositories and Docker Hub
+- name: Allow external access for packages
+  run: |
+    # Add any specific external access requirements here
+    echo "Setting up external access for PHP 8.5 add-on testing"
+    # Ensure Docker Hub access for php:8.5.0RC1-fpm-bookworm
+    # Ensure *.ddev.site access for testing
+    # Ensure apt package repository access

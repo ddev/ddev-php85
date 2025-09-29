@@ -15,7 +15,9 @@ This add-on provides experimental PHP 8.5 support for DDEV projects using pre-re
 
 ## What is DDEV PHP 8.5 Add-on?
 
-This add-on allows DDEV users to experiment with PHP 8.5 while it's still in alpha/beta development phases. It provides a separate PHP 8.5 service that can be used alongside the main web service.
+This add-on allows DDEV users to experiment with PHP 8.5 while it's in Release Candidate (RC) status. PHP 8.5 is expected to be released in November 2024, and you can track its progress at [PHP 8.5.0 Release](https://www.php.net/index.php#2025-09-25-3).
+
+This add-on provides a separate PHP 8.5 service that can be used alongside the main web service.
 
 Since PHP 8.5 is not yet available from the official deb.sury.org repository, this add-on uses the official PHP Docker images to provide early access to PHP 8.5 features.
 
@@ -52,12 +54,12 @@ The PHP 8.5 service has the same codebase mounted at `/var/www/html` as the main
 
 This add-on has several important limitations:
 
-- **Experimental**: PHP 8.5 is in alpha/beta status and may have bugs or compatibility issues
+- **Release Candidate**: PHP 8.5 is in Release Candidate status and may have bugs or compatibility issues
 - **No Xdebug**: The current setup does not include Xdebug support
 - **Limited Extensions**: Only includes basic PHP extensions (see `php8.5-build/Dockerfile` for the full list)
 - **No Development Tools**: Some development tools that integrate with DDEV's main web service may not work with the PHP 8.5 service
 - **Performance**: Building the custom PHP 8.5 image may take additional time during project startup
-- **Stability**: Pre-release PHP versions may have unexpected behavior
+- **Stability**: Release Candidate PHP versions may have unexpected behavior
 
 ## Contributing
 
