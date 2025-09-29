@@ -29,6 +29,33 @@ ddev add-on get ddev/ddev-php85
 ddev restart
 ```
 
+## Quick Test
+
+To quickly test this add-on, create a new DDEV project and try PHP 8.5:
+
+```bash
+# Create a test project
+mkdir testphp85 && cd testphp85
+
+# Initialize DDEV project
+ddev config --auto
+
+# Install the PHP 8.5 add-on
+ddev add-on get ddev/ddev-php85
+
+# Start the project
+ddev start
+
+# Test PHP 8.5 is working
+ddev php85 --version
+
+# Create a simple PHP file to test web functionality
+echo "<?php phpinfo(); ?>" > index.php
+
+# Launch in browser to see PHP 8.5 info page
+ddev launch
+```
+
 ## Usage
 
 After installation, you can access PHP 8.5 several ways:
