@@ -145,6 +145,17 @@ Once implemented, this add-on should:
 - [DDEV Add-on Development Guide](https://ddev.readthedocs.io/en/stable/users/extend/additional-services/)
 - [DDEV Add-on Registry](https://addons.ddev.com/)
 - [Bats Testing Framework](https://bats-core.readthedocs.io/)
+- [PHP 8.5 Release Notes](https://www.php.net/releases/8.5/en.php)
+
+## Contributing Guidelines
+
+When contributing to this repository:
+1. Follow the DDEV add-on conventions and best practices
+2. Test your changes with both local and release installation methods
+3. Update documentation for any new features or configuration options
+4. Ensure compatibility with different operating systems and DDEV versions
+5. Add or update tests for new functionality
+6. Use descriptive commit messages and PR descriptions
 
 ## Repository Maintenance
 
@@ -153,3 +164,5 @@ Once implemented, this add-on should:
 - Respond to community issues and pull requests
 - Maintain compatibility with DDEV releases
 - Update documentation as needed
+- Review and merge pull requests promptly
+- Tag releases following semantic versioning
