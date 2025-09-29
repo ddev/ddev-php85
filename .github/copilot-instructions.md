@@ -4,6 +4,12 @@
 
 This repository is a DDEV add-on for PHP 8.5 support, currently based on the DDEV add-on template. DDEV is a Docker-based local development environment tool that simplifies setting up development environments for web applications.
 
+For general DDEV agent instructions and conventions, please refer to: https://github.com/ddev/.github/blob/main/AGENTS.md
+
+## Test Environment Requirements
+
+This repository requires access to `*.ddev.site` domains for testing functionality. The test suite creates local DDEV projects that use the `.ddev.site` TLD to validate the add-on works correctly with DDEV's local development environment.
+
 ## Current State
 
 **Note**: This repository is currently in development and contains template files that need to be customized for PHP 8.5 support. The repository still contains references to "addon-template" that should be replaced with "php8.5" specific configurations.
