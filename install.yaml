@@ -1,6 +1,6 @@
 # Details about the install.yaml file are at https://ddev.readthedocs.io/en/stable/users/extend/additional-services/#sections-and-features-of-ddev-get-add-on-installyaml
 
-name: addon-template
+name: php8.5
 
 # pre_install_actions - list of actions to run before installing the addon.
 # Examples would be removing an extraneous docker volume,
@@ -60,14 +60,9 @@ pre_install_actions:
 # If you use directories, they must be directories that are managed
 # by this add-on, or removal could remove things that are not owned by it
 project_files:
-  - docker-compose.addon-template.yaml
-  # - commands/web/add-on-command
-  # - commands/host/add-on-command-host
-  # - web-build/Dockerfile.addon-template
-  # - some-directory/file1.txt
-  # - some-directory/file2.txt
-  # - extra_files_dir_created_by_this_template/
-  # - somefile.sh
+  - docker-compose.php8.5.yaml
+  - nginx_full/nginx-site.conf
+  - php8.5-build/
 
 # List of files and directories that are copied into the global .ddev directory
 # DDEV environment variables can be interpolated into these filenames

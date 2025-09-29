@@ -16,7 +16,7 @@ setup() {
   set -eu -o pipefail
 
   # Override this variable for your add-on:
-  export GITHUB_REPO=ddev/ddev-addon-template
+  export GITHUB_REPO=ddev/ddev-php8.5
 
   TEST_BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
   export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib:/usr/lib/bats"
@@ -39,17 +39,30 @@ setup() {
 }
 
 health_checks() {
-  # Do something useful here that verifies the add-on
-
-  # You can check for specific information in headers:
-  # run curl -sfI https://${PROJNAME}.ddev.site
-  # assert_output --partial "HTTP/2 200"
-  # assert_output --partial "test_header"
-
-  # Or check if some command gives expected output:
-  DDEV_DEBUG=true run ddev launch
+  # Test that PHP 8.5 service is available and working
+  echo "# Testing PHP 8.5 version" >&3
+  run ddev exec -s php8.5 php --version
   assert_success
-  assert_output --partial "FULLURL https://${PROJNAME}.ddev.site"
+  assert_output --partial "PHP 8.5"
+  
+  # Test that PHP 8.5 can execute a simple script
+  echo "# Testing PHP 8.5 script execution" >&3
+  run ddev exec -s php8.5 php -r "echo 'PHP 8.5 is working';"
+  assert_success
+  assert_output --partial "PHP 8.5 is working"
+  
+  # Test that phpinfo works
+  echo "# Testing PHP 8.5 phpinfo" >&3
+  run ddev exec -s php8.5 php -r "phpinfo();"
+  assert_success
+  assert_output --partial "PHP Version"
+  assert_output --partial "8.5"
+  
+  # Test that composer is available in PHP 8.5 container
+  echo "# Testing composer in PHP 8.5 container" >&3
+  run ddev exec -s php8.5 composer --version
+  assert_success
+  assert_output --partial "Composer"
 }
 
 teardown() {
