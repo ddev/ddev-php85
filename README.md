@@ -32,7 +32,9 @@ ddev restart
 
 ## Usage
 
-After installation, you can access PHP 8.5 through the `php8.5` service:
+After installation, you can access PHP 8.5 in two ways:
+
+### Using the php8.5 service directly:
 
 ```bash
 # Check PHP 8.5 version
@@ -48,6 +50,21 @@ ddev exec -s php8.5 composer install
 ddev ssh -s php8.5
 ```
 
+### Using the convenient php8.5 command:
+
+This add-on provides a custom `ddev php8.5` command for easier access:
+
+```bash
+# Check PHP 8.5 version (shorthand)
+ddev php8.5 --version
+
+# Run PHP 8.5 scripts (shorthand)
+ddev php8.5 -r "echo 'Hello from PHP 8.5!';"
+
+# Use with any PHP flags or arguments
+ddev php8.5 -i  # Show phpinfo
+```
+
 The PHP 8.5 service has the same codebase mounted at `/var/www/html` as the main web container.
 
 ## Limitations
@@ -61,6 +78,7 @@ This add-on has several important limitations:
 - **Performance**: Building the custom PHP 8.5 image may take additional time during project startup
 - **Stability**: Release Candidate PHP versions may have unexpected behavior
 - **PHP Version Setting**: The `php_version` setting in DDEV configuration has no effect when using this add-on, as it provides a separate PHP 8.5 service alongside the main web container
+- **Performance Mode**: This add-on sets `performance_mode: none` to avoid conflicts between mutagen (used by the main web container) and bind-mounts (used by the PHP 8.5 container). This may impact file sync performance.
 
 ## Contributing
 

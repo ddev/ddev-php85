@@ -70,6 +70,12 @@ health_checks() {
   assert_success
   assert_output --partial "Composer"
 
+  # Test that php8.5 command works (project-level command)
+  echo "# Testing php8.5 custom command" >&3
+  run ddev php8.5 --version
+  assert_success
+  assert_output --partial "PHP 8.5"
+
 }
 
 teardown() {
