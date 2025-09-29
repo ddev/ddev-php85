@@ -60,6 +60,7 @@ This add-on has several important limitations:
 - **No Development Tools**: Some development tools that integrate with DDEV's main web service may not work with the PHP 8.5 service
 - **Performance**: Building the custom PHP 8.5 image may take additional time during project startup
 - **Stability**: Release Candidate PHP versions may have unexpected behavior
+- **PHP Version Setting**: The `php_version` setting in DDEV configuration has no effect when using this add-on, as it provides a separate PHP 8.5 service alongside the main web container
 
 ## Contributing
 
