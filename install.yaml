@@ -1,20 +1,22 @@
-name: php8.5
+name: php85
 
 project_files:
-  - docker-compose.php8.5.yaml
-  - nginx_full/nginx-php8.5.conf
-  - web-entrypoint.d/php8.5.sh
-  - php8.5-build/Dockerfile
-  - config.php8.5.yaml
-  - commands/php8.5/php8.5
+  - docker-compose.php85.yaml
+  - nginx_full/nginx-php85.conf
+  - web-entrypoint.d/php85.sh
+  - php85-build/Dockerfile
+  - config.php85.yaml
+  - commands/php85/php85
+  - commands/php85/composer85
+  - commands/php85/drush85
 
-ddev_version_constraint: '>= v1.24.3'
+ddev_version_constraint: '>= v1.24.8'
 
 post_install_actions:
   - |
     #ddev-description:Configure nginx docroot based on project settings
     if [ -n "${DDEV_DOCROOT}" ]; then
-      sed -i '' "s|\${DDEV_DOCROOT}|${DDEV_DOCROOT}|g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php8.5.conf
+      sed -i '' "s|\${DDEV_DOCROOT}|${DDEV_DOCROOT}|g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf
     else
-      sed -i '' "s|\${DDEV_DOCROOT}||g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php8.5.conf
+      sed -i '' "s|\${DDEV_DOCROOT}||g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf
     fi

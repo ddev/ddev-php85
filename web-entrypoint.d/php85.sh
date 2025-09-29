@@ -9,4 +9,4 @@ set -eu -o pipefail
 # Remove all existing nginx site configs to avoid conflicts
 rm -f /etc/nginx/sites-enabled/*
 # Copy our custom config that routes to PHP 8.5 container
-cp /mnt/ddev_config/nginx_full/nginx-php8.5.conf /etc/nginx/sites-enabled/nginx-site.conf
+cp /mnt/ddev_config/nginx_full/nginx-php85.conf /etc/nginx/sites-enabled/nginx-site.conf

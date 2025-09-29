@@ -1,13 +1,11 @@
 #ddev-generated
 services:
-  php8.5:
-    container_name: ddev-${DDEV_SITENAME}-php8.5
+  php85:
+    container_name: ddev-${DDEV_SITENAME}-php85
     restart: "no"
-    # On Linux may need to to `export UID` in your environment
-    # or add UID in project's .ddev/.env
-    # user: "${UID}:${UID}"
+    user: "${DDEV_UID}:${DDEV_GID}"
     build:
-      context: './php8.5-build'
+      context: 'php85-build'
       args:
         BASE_IMAGE: php:8.5.0RC1-fpm-trixie
     links:
@@ -21,6 +19,8 @@ services:
       - IS_DDEV_PROJECT=true
       - DDEV_PHP_VERSION=8.5
       - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d:/mnt/ddev_config/php
+      - COMPOSER_CACHE_DIR=/mnt/ddev-global-cache/composer
+      - GIT_CONFIG_GLOBAL=/var/www/html/.ddev/.global-gitconfig
     volumes:
     - type: bind
       source: ${DDEV_APPROOT}

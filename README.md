@@ -1,19 +1,18 @@
 [![add-on registry](https://img.shields.io/badge/DDEV-Add--on_Registry-blue)](https://addons.ddev.com)
-[![tests](https://github.com/ddev/ddev-php8.5/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ddev/ddev-php8.5/actions/workflows/tests.yml?query=branch%3Amain)
-[![last commit](https://img.shields.io/github/last-commit/ddev/ddev-php8.5)](https://github.com/ddev/ddev-php8.5/commits)
-[![release](https://img.shields.io/github/v/release/ddev/ddev-php8.5)](https://github.com/ddev/ddev-php8.5/releases/latest)
+[![tests](https://github.com/ddev/ddev-php85/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ddev/ddev-php85/actions/workflows/tests.yml?query=branch%3Amain)
+[![last commit](https://img.shields.io/github/last-commit/ddev/ddev-php85)](https://github.com/ddev/ddev-php85/commits)
+[![release](https://img.shields.io/github/v/release/ddev/ddev-php85)](https://github.com/ddev/ddev-php85/releases/latest)
 
 # DDEV PHP 8.5 Add-on <!-- omit in toc -->
 
 This add-on provides experimental PHP 8.5 support for DDEV projects using pre-release PHP 8.5 images.
 
-* [What is DDEV PHP 8.5 Add-on?](#what-is-ddev-php-85-add-on)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Limitations](#limitations)
 * [Contributing](#contributing)
 
-## What is DDEV PHP 8.5 Add-on?
+## What is ddev-php85?
 
 This add-on allows DDEV users to experiment with PHP 8.5 while it's in Release Candidate (RC) status. PHP 8.5 is expected to be released in November 2024, and you can track its progress at [PHP 8.5.0 Release](https://www.php.net/index.php#2025-09-25-3).
 
@@ -26,43 +25,43 @@ Since PHP 8.5 is not yet available from the official deb.sury.org repository, th
 ## Installation
 
 ```bash
-ddev add-on get ddev/ddev-php8.5
+ddev add-on get ddev/ddev-php85
 ddev restart
 ```
 
 ## Usage
 
-After installation, you can access PHP 8.5 in two ways:
+After installation, you can access PHP 8.5 several ways:
 
-### Using the php8.5 service directly:
+### Using the php85 service directly:
 
 ```bash
 # Check PHP 8.5 version
-ddev exec -s php8.5 php --version
+ddev exec -s php85 php --version
 
 # Run PHP 8.5 scripts
-ddev exec -s php8.5 php -r "echo 'Hello from PHP 8.5!';"
+ddev exec -s php85 php -r "echo 'Hello from PHP 8.5!';"
 
 # Use Composer with PHP 8.5
-ddev exec -s php8.5 composer install
+ddev exec -s php85 composer install
 
-# Access the PHP 8.5 container directly
-ddev ssh -s php8.5
+# Access the php85 container directly
+ddev ssh -s php85
 ```
 
-### Using the convenient php8.5 command:
+### Using the convenience commands:
 
-This add-on provides a custom `ddev php8.5` command for easier access:
+This add-on provides  `ddev php85` , `ddev composer85`, and `ddev drush85` commands for easier access:
 
 ```bash
 # Check PHP 8.5 version (shorthand)
-ddev php8.5 --version
+ddev php85 --version
 
 # Run PHP 8.5 scripts (shorthand)
-ddev php8.5 -r "echo 'Hello from PHP 8.5!';"
+ddev php85 -r "echo 'Hello from PHP 8.5!';"
 
 # Use with any PHP flags or arguments
-ddev php8.5 -i  # Show phpinfo
+ddev php85 -i  # Show phpinfo
 ```
 
 The PHP 8.5 service has the same codebase mounted at `/var/www/html` as the main web container.
@@ -73,7 +72,7 @@ This add-on has several important limitations:
 
 - **Release Candidate**: PHP 8.5 is in Release Candidate status and may have bugs or compatibility issues
 - **No Xdebug**: The current setup does not include Xdebug support
-- **Limited Extensions**: Only includes basic PHP extensions (see `php8.5-build/Dockerfile` for the full list)
+- **Limited Extensions**: Only includes basic PHP extensions (see `php85-build/Dockerfile` for the full list)
 - **No Development Tools**: Some development tools that integrate with DDEV's main web service may not work with the PHP 8.5 service
 - **Performance**: Building the custom PHP 8.5 image may take additional time during project startup
 - **Stability**: Release Candidate PHP versions may have unexpected behavior
@@ -84,9 +83,8 @@ This add-on has several important limitations:
 
 Contributions are welcome! Please:
 
-1. Test any changes thoroughly
-2. Update tests in `tests/test.bats` for new functionality
-3. Update this README if you add new features or change behavior
-4. Follow the existing code style and patterns
+1. Update tests in `tests/test.bats` for new functionality
+2. Update this README if you add new features or change behavior
+3. Follow the existing code style and patterns
 
 **Contributed and maintained by the DDEV team**

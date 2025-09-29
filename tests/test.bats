@@ -14,7 +14,7 @@ setup() {
   set -eu -o pipefail
 
   # Override this variable for your add-on:
-  export GITHUB_REPO=ddev/ddev-php8.5
+  export GITHUB_REPO=ddev/ddev-php85
 
   TEST_BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
   export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib:/usr/lib/bats"
@@ -39,13 +39,13 @@ setup() {
 health_checks() {
   # Test that PHP 8.5 service is available and working
   echo "# Testing PHP 8.5 version" >&3
-  run ddev exec -s php8.5 php --version
+  run ddev exec -s php85 php --version
   assert_success
   assert_output --partial "PHP 8.5"
 
   # Test PHP 8.5 modules
   echo "# Testing PHP 8.5 modules" >&3
-  run ddev exec -s php8.5 php -m
+  run ddev exec -s php85 php -m
   assert_success
   assert_output --partial "Core"
   assert_output --partial "json"
@@ -53,26 +53,26 @@ health_checks() {
 
   # Test that PHP 8.5 can execute a simple script
   echo "# Testing PHP 8.5 script execution" >&3
-  run ddev exec -s php8.5 php -r "echo 'PHP 8.5 is working';"
+  run ddev exec -s php85 php -r "echo 'PHP 8.5 is working';"
   assert_success
   assert_output --partial "PHP 8.5 is working"
 
   # Test that phpinfo works
   echo "# Testing PHP 8.5 phpinfo" >&3
-  run ddev exec -s php8.5 php -r "echo 'PHP Version: ' . PHP_VERSION;"
+  run ddev exec -s php85 php -r "echo 'PHP Version: ' . PHP_VERSION;"
   assert_success
   assert_output --partial "PHP Version:"
   assert_output --partial "8.5"
 
   # Test that composer is available in PHP 8.5 container
   echo "# Testing composer in PHP 8.5 container" >&3
-  run ddev exec -s php8.5 composer --version
+  run ddev exec -s php85 composer --version
   assert_success
   assert_output --partial "Composer"
 
-  # Test that php8.5 command works (project-level command)
-  echo "# Testing php8.5 custom command" >&3
-  run ddev php8.5 --version
+  # Test that php85 command works (project-level command)
+  echo "# Testing php85 custom command" >&3
+  run ddev php85 --version
   assert_success
   assert_output --partial "PHP 8.5"
 

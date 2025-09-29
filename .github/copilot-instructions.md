@@ -1,4 +1,4 @@
-# Copilot Instructions for ddev-php8.5
+# Copilot Instructions for ddev-php85
 
 ## Repository Overview
 
@@ -14,7 +14,7 @@ Additionally, permissions need to be lifted to allow `apt-get` instructions to w
 
 ## Current State
 
-**Note**: This repository is currently in development and contains template files that need to be customized for PHP 8.5 support. The repository still contains references to "addon-template" that should be replaced with "php8.5" specific configurations.
+**Note**: This repository is currently in development and contains template files that need to be customized for PHP 8.5 support. The repository still contains references to "addon-template" that should be replaced with "php85" specific configurations.
 
 ## Purpose
 
@@ -32,8 +32,8 @@ Once fully developed, this add-on will extend DDEV to support PHP 8.5, allowing 
 
 ### Files Needing Customization
 The following files still contain template references and need to be updated for PHP 8.5:
-- `install.yaml` - Change name from "addon-template" to "php8.5"
-- `docker-compose.addon-template.yaml` - Rename to `docker-compose.php8.5.yaml` and configure for PHP 8.5
+- `install.yaml` - Change name from "addon-template" to "php85"
+- `docker-compose.addon-template.yaml` - Rename to `docker-compose.php85.yaml` and configure for PHP 8.5
 - `tests/test.bats` - Update GITHUB_REPO reference from template to actual repository
 - `README.md` - Replace template content with PHP 8.5 specific documentation
 - Various files containing "ddev/ddev-addon-template" references
@@ -95,10 +95,10 @@ To complete this add-on, the following tasks need to be completed:
 
 ### 1. Template Customization
 - [ ] Run the first-time setup script or manually update template references
-- [ ] Rename `docker-compose.addon-template.yaml` to `docker-compose.php8.5.yaml`
-- [ ] Update `install.yaml` name field from "addon-template" to "php8.5"
+- [ ] Rename `docker-compose.addon-template.yaml` to `docker-compose.php85.yaml`
+- [ ] Update `install.yaml` name field from "addon-template" to "php85"
 - [ ] Update project_files to reference the renamed docker-compose file
-- [ ] Update GITHUB_REPO in `tests/test.bats` to "ddev/ddev-php8.5"
+- [ ] Update GITHUB_REPO in `tests/test.bats` to "ddev/ddev-php85"
 
 ### 2. PHP 8.5 Configuration
 - [ ] Configure Docker service to use PHP 8.5 image
@@ -144,7 +144,7 @@ Once implemented, this add-on should:
 1. Update version constraints in `install.yaml`
 2. Update `README.md` with new features/changes
 3. Create GitHub release with semantic version
-4. Test installation via `ddev add-on get ddev/ddev-php8.5`
+4. Test installation via `ddev add-on get ddev/ddev-php85`
 5. Announce in DDEV community channels
 
 ## Related Resources

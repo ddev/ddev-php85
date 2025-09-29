@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run php inside the php85 container
+## Usage: php85 [flags] [args]
+## Example: "ddev php85 --version"
+## ExecRaw: true
+
+php "$@"
