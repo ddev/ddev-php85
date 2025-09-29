@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run composer inside the php85 container
+## Usage: composer85 [flags] [args]
+## Example: "ddev composer85 install"
+## ExecRaw: true
+
+composer "$@"

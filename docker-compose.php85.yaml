@@ -1,0 +1,35 @@
+#ddev-generated
+services:
+  php85:
+    container_name: ddev-${DDEV_SITENAME}-php85
+    restart: "no"
+    user: "${DDEV_UID}:${DDEV_GID}"
+    build:
+      context: 'php85-build'
+      args:
+        BASE_IMAGE: php:8.5.0RC1-fpm-trixie
+    links:
+      - db:db
+    expose:
+      - 9000
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - IS_DDEV_PROJECT=true
+      - DDEV_PHP_VERSION=8.5
+      - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d:/mnt/ddev_config/php
+      - COMPOSER_CACHE_DIR=/mnt/ddev-global-cache/composer
+      - GIT_CONFIG_GLOBAL=/var/www/html/.ddev/.global-gitconfig
+    volumes:
+    - type: bind
+      source: ${DDEV_APPROOT}
+      target: /var/www/html
+      consistency: cached
+    - ".:/mnt/ddev_config:ro"
+    - ddev-global-cache:/mnt/ddev-global-cache
+
+  web:
+    healthcheck:
+      # Use "true" as the healthcheck to ignore its result
+      test: ["CMD", "true"]

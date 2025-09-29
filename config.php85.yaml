@@ -1,0 +1,11 @@
+#ddev-generated
+# Performance mode configuration for PHP 8.5 add-on
+# Disables mutagen to avoid conflicts between mutagen on one container
+# and bind-mount on the PHP 8.5 container
+
+performance_mode: none
+
+hooks:
+  post-start:
+    - exec: "git config --global --add safe.directory /var/www/html"
+      service: php85

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run drush inside the php85 container
+## Usage: drush85 [flags] [args]
+## Example: "ddev drush85 status"
+## ExecRaw: true
+
+vendor/bin/drush "$@"

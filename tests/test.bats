@@ -7,8 +7,6 @@
 # For local tests, install bats-core, bats-assert, bats-file, bats-support
 # And run this in the add-on root directory:
 #   bats ./tests/test.bats
-# To exclude release tests:
-#   bats ./tests/test.bats --filter-tags '!release'
 # For debugging:
 #   bats ./tests/test.bats --show-output-of-passing-tests --verbose-run --print-output-on-failure
 
@@ -16,7 +14,7 @@ setup() {
   set -eu -o pipefail
 
   # Override this variable for your add-on:
-  export GITHUB_REPO=ddev/ddev-addon-template
+  export GITHUB_REPO=ddev/ddev-php85
 
   TEST_BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
   export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib:/usr/lib/bats"
@@ -39,17 +37,45 @@ setup() {
 }
 
 health_checks() {
-  # Do something useful here that verifies the add-on
-
-  # You can check for specific information in headers:
-  # run curl -sfI https://${PROJNAME}.ddev.site
-  # assert_output --partial "HTTP/2 200"
-  # assert_output --partial "test_header"
-
-  # Or check if some command gives expected output:
-  DDEV_DEBUG=true run ddev launch
+  # Test that PHP 8.5 service is available and working
+  echo "# Testing PHP 8.5 version" >&3
+  run ddev exec -s php85 php --version
   assert_success
-  assert_output --partial "FULLURL https://${PROJNAME}.ddev.site"
+  assert_output --partial "PHP 8.5"
+
+  # Test PHP 8.5 modules
+  echo "# Testing PHP 8.5 modules" >&3
+  run ddev exec -s php85 php -m
+  assert_success
+  assert_output --partial "Core"
+  assert_output --partial "json"
+  assert_output --partial "mbstring"
+
+  # Test that PHP 8.5 can execute a simple script
+  echo "# Testing PHP 8.5 script execution" >&3
+  run ddev exec -s php85 php -r "echo 'PHP 8.5 is working';"
+  assert_success
+  assert_output --partial "PHP 8.5 is working"
+
+  # Test that phpinfo works
+  echo "# Testing PHP 8.5 phpinfo" >&3
+  run ddev exec -s php85 php -r "echo 'PHP Version: ' . PHP_VERSION;"
+  assert_success
+  assert_output --partial "PHP Version:"
+  assert_output --partial "8.5"
+
+  # Test that composer is available in PHP 8.5 container
+  echo "# Testing composer in PHP 8.5 container" >&3
+  run ddev exec -s php85 composer --version
+  assert_success
+  assert_output --partial "Composer"
+
+  # Test that php85 command works (project-level command)
+  echo "# Testing php85 custom command" >&3
+  run ddev php85 --version
+  assert_success
+  assert_output --partial "PHP 8.5"
+
 }
 
 teardown() {
@@ -64,6 +90,7 @@ teardown() {
   fi
 }
 
+# bats test_tags=local
 @test "install from directory" {
   set -eu -o pipefail
   echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
@@ -74,13 +101,37 @@ teardown() {
   health_checks
 }
 
-# bats test_tags=release
-@test "install from release" {
+
+# bats test_tags=local
+@test "web functionality with custom docroot" {
   set -eu -o pipefail
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${GITHUB_REPO}"
+  echo "# Testing web functionality with custom docroot" >&3
+
+  # Create docroot directory and index.php
+  mkdir -p docroot
+  cat > docroot/index.php << 'EOF'
+<?php
+phpinfo();
+EOF
+
+  # Configure project to use custom docroot
+  run ddev config --docroot=docroot
+  assert_success
+
+  # Install add-on
+  run ddev add-on get "${DIR}"
   assert_success
   run ddev restart -y
   assert_success
+
+  # Test web access via curl
+  echo "# Testing web access to phpinfo" >&3
+  run ddev exec curl -s http://localhost
+  assert_success
+  assert_output --partial "PHP Version"
+  assert_output --partial "8.5"
+  assert_output --partial "phpinfo()"
+
+  # Also test CLI functionality
   health_checks
 }
