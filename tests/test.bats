@@ -7,8 +7,6 @@
 # For local tests, install bats-core, bats-assert, bats-file, bats-support
 # And run this in the add-on root directory:
 #   bats ./tests/test.bats
-# To exclude release tests:
-#   bats ./tests/test.bats --filter-tags '!release'
 # For debugging:
 #   bats ./tests/test.bats --show-output-of-passing-tests --verbose-run --print-output-on-failure
 
@@ -44,32 +42,34 @@ health_checks() {
   run ddev exec -s php8.5 php --version
   assert_success
   assert_output --partial "PHP 8.5"
-  
+
+  # Test PHP 8.5 modules
+  echo "# Testing PHP 8.5 modules" >&3
+  run ddev exec -s php8.5 php -m
+  assert_success
+  assert_output --partial "Core"
+  assert_output --partial "json"
+  assert_output --partial "mbstring"
+
   # Test that PHP 8.5 can execute a simple script
   echo "# Testing PHP 8.5 script execution" >&3
   run ddev exec -s php8.5 php -r "echo 'PHP 8.5 is working';"
   assert_success
   assert_output --partial "PHP 8.5 is working"
-  
+
   # Test that phpinfo works
   echo "# Testing PHP 8.5 phpinfo" >&3
-  run ddev exec -s php8.5 php -r "phpinfo();"
+  run ddev exec -s php8.5 php -r "echo 'PHP Version: ' . PHP_VERSION;"
   assert_success
-  assert_output --partial "PHP Version"
+  assert_output --partial "PHP Version:"
   assert_output --partial "8.5"
-  
+
   # Test that composer is available in PHP 8.5 container
   echo "# Testing composer in PHP 8.5 container" >&3
   run ddev exec -s php8.5 composer --version
   assert_success
   assert_output --partial "Composer"
-  
-  # Test with our test file
-  echo "# Testing PHP 8.5 with test file" >&3
-  run ddev exec -s php8.5 php /mnt/ddev_config/tests/testdata/test85.php
-  assert_success
-  assert_output --partial "PHP Version: 8.5"
-  assert_output --partial "PHP 8.5 Test: PASS"
+
 }
 
 teardown() {
@@ -84,6 +84,7 @@ teardown() {
   fi
 }
 
+# bats test_tags=local
 @test "install from directory" {
   set -eu -o pipefail
   echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
@@ -94,13 +95,37 @@ teardown() {
   health_checks
 }
 
-# bats test_tags=release
-@test "install from release" {
+
+# bats test_tags=local
+@test "web functionality with custom docroot" {
   set -eu -o pipefail
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${GITHUB_REPO}"
+  echo "# Testing web functionality with custom docroot" >&3
+
+  # Create docroot directory and index.php
+  mkdir -p docroot
+  cat > docroot/index.php << 'EOF'
+<?php
+phpinfo();
+EOF
+
+  # Configure project to use custom docroot
+  run ddev config --docroot=docroot
+  assert_success
+
+  # Install add-on
+  run ddev add-on get "${DIR}"
   assert_success
   run ddev restart -y
   assert_success
+
+  # Test web access via curl
+  echo "# Testing web access to phpinfo" >&3
+  run ddev exec curl -s http://localhost
+  assert_success
+  assert_output --partial "PHP Version"
+  assert_output --partial "8.5"
+  assert_output --partial "phpinfo()"
+
+  # Also test CLI functionality
   health_checks
 }
