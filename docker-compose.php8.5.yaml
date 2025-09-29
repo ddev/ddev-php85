@@ -9,7 +9,7 @@ services:
     build:
       context: './php8.5-build'
       args:
-        BASE_IMAGE: php:8.5.0RC1-fpm-bookworm
+        BASE_IMAGE: php:8.5.0RC1-fpm-trixie
     links:
       - db:db
     expose:

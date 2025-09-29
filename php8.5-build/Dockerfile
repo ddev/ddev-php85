@@ -3,6 +3,7 @@ ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
 # Install system dependencies and PHP extensions that are commonly needed
+# Note: Using Debian Trixie base image to resolve dom/opcache extension build issues
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -18,12 +19,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
         curl \
-        # dom \
+        dom \
         fileinfo \
         gd \
         intl \
         mbstring \
-        # opcache \
+        opcache \
         pdo_mysql \
         simplexml \
         xml \
