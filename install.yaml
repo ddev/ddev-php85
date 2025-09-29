@@ -14,9 +14,11 @@ ddev_version_constraint: '>= v1.24.8'
 
 post_install_actions:
   - |
-    #ddev-description:Configure nginx docroot based on project settings
+    #ddev-description:Configure nginx docroot for PHP 8.5 service
     if [ -n "${DDEV_DOCROOT}" ]; then
-      sed -i '' "s|\${DDEV_DOCROOT}|${DDEV_DOCROOT}|g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf
+      sed -i.bak "s|__DDEV_DOCROOT__|${DDEV_DOCROOT}|g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf
     else
-      sed -i '' "s|\${DDEV_DOCROOT}||g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf
+      sed -i.bak "s|__DDEV_DOCROOT__||g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf
     fi
+    rm -f ${DDEV_APPROOT}/.ddev/nginx_full/nginx-php85.conf.bak
+
