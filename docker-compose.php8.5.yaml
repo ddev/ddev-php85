@@ -23,7 +23,7 @@ services:
       - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d:/mnt/ddev_config/php
     volumes:
     - type: bind
-      source: ../
+      source: ${DDEV_APPROOT}
       target: /var/www/html
       consistency: cached
     - ".:/mnt/ddev_config:ro"
