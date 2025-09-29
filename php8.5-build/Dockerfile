@@ -2,22 +2,19 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
-# Install system dependencies and PHP extensions that are commonly needed
-# Note: Using Debian Trixie base image to resolve dom/opcache extension build issues
+# Install system dependencies that are always needed
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libmagickwand-dev \
-    libicu-dev \
-    libxml2-dev \
-    libonig-dev \
-    libcurl4-openssl-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions using the modern install-php-extensions script
+# This automatically handles dependencies and is the current recommended approach
+RUN curl -sSLf \
+        -o /usr/local/bin/install-php-extensions \
+        https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions \
         bcmath \
         curl \
         dom \
@@ -29,8 +26,7 @@ RUN apt-get update && apt-get install -y \
         pdo_mysql \
         simplexml \
         xml \
-        zip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+        zip
 
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
