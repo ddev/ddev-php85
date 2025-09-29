@@ -86,9 +86,14 @@ dependencies:
 # DDEV environment variables can be interpolated into these actions.
 # post_install_actions are executed in the context of the target project's .ddev directory.
 post_install_actions:
-  # - chmod +x ~/.ddev/commands/web/somecommand
-  # - touch ${DDEV_APPROOT}/somefile.${GOOS}.${DDEV_WEBSERVER}
-  # - perl -pi -e 's/oldstring/newstring/g' ${DDEV_APPROOT}/.ddev/docker-compose.addon-template.yaml
+  # Substitute DDEV_DOCROOT in nginx configuration, handling empty docroot case
+  - |
+    #ddev-description:Configure nginx docroot based on project settings
+    if [ -n "${DDEV_DOCROOT}" ]; then
+      sed -i '' "s|\${DDEV_DOCROOT}|${DDEV_DOCROOT}|g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-site.conf
+    else
+      sed -i '' "s|\${DDEV_DOCROOT}||g" ${DDEV_APPROOT}/.ddev/nginx_full/nginx-site.conf
+    fi
 
 # Shell actions that can be done during removal of the add-on.
 # Files listed in project_files section will be automatically removed here if they contain #ddev-generated line.
