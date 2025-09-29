@@ -18,12 +18,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
         curl \
-        dom \
+        # dom \
         fileinfo \
         gd \
         intl \
         mbstring \
-        opcache \
+        # opcache \
         pdo_mysql \
         simplexml \
         xml \
