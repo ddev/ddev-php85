@@ -63,6 +63,13 @@ health_checks() {
   run ddev exec -s php8.5 composer --version
   assert_success
   assert_output --partial "Composer"
+  
+  # Test with our test file
+  echo "# Testing PHP 8.5 with test file" >&3
+  run ddev exec -s php8.5 php /mnt/ddev_config/tests/testdata/test85.php
+  assert_success
+  assert_output --partial "PHP Version: 8.5"
+  assert_output --partial "PHP 8.5 Test: PASS"
 }
 
 teardown() {
