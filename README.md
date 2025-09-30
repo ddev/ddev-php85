@@ -9,6 +9,7 @@ This add-on provides experimental PHP 8.5 support for DDEV projects using pre-re
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Drupal 11 Quick Start](README.drupal11.md)
 * [Limitations](#limitations)
 * [Contributing](#contributing)
 

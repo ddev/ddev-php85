@@ -6,6 +6,7 @@ project_files:
   - web-entrypoint.d/php85.sh
   - php85-build/Dockerfile
   - config.php85.yaml
+  - php/php-nowarnings.ini
   - commands/php85/php85
   - commands/php85/composer85
   - commands/php85/drush85

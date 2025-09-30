@@ -8,6 +8,9 @@ services:
       context: 'php85-build'
       args:
         BASE_IMAGE: php:8.5.0RC1-fpm-trixie
+        username: "${DDEV_USER}"
+        uid: "${DDEV_UID}"
+        gid: "${DDEV_GID}"
     links:
       - db:db
     expose:
@@ -21,6 +24,7 @@ services:
       - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d:/mnt/ddev_config/php
       - COMPOSER_CACHE_DIR=/mnt/ddev-global-cache/composer
       - GIT_CONFIG_GLOBAL=/var/www/html/.ddev/.global-gitconfig
+      - DRUSH_OPTIONS_URI=${DDEV_PRIMARY_URL}
     volumes:
     - type: bind
       source: ${DDEV_APPROOT}
