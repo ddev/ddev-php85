@@ -190,6 +190,7 @@ EOF
   run bash -c "DDEV_DEBUG=true ddev launch"
   assert_success
   echo "# curling project" >&3
+  curl -s "$(ddev st -j | jq -r .raw.primary_url)/user"
   run curl -s "$(ddev st -j | jq -r .raw.primary_url)"
   assert_output --regexp "Welcome.*Drush Site"
 }

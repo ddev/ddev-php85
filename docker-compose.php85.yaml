@@ -4,6 +4,7 @@ services:
     container_name: ddev-${DDEV_SITENAME}-php85
     restart: "no"
     user: "${DDEV_UID}:${DDEV_GID}"
+    image: ${PHP85_DOCKER_IMAGE:-php:8.5.0RC1-fpm-trixie}-${DDEV_SITENAME}-built
     build:
       context: 'php85-build'
       args:
