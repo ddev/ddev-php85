@@ -31,11 +31,11 @@ jobs:
     strategy:
       matrix:
         ddev_version: [stable, HEAD]
-        bats_test: [
-          "install from directory",
-          "install from release",
-          "web functionality with custom docroot",
-          "drupal 11 installation with php85",
+        bats_tag: [
+          "local",
+          "release",
+          "web",
+          "drupal11",
         ]
 
       fail-fast: false
@@ -50,4 +50,4 @@ jobs:
           debug_enabled: ${{ github.event.inputs.debug_enabled }}
           addon_repository: ${{ env.GITHUB_REPOSITORY }}
           addon_ref: ${{ env.GITHUB_REF }}
-          test_command: bats tests -f "${{ matrix.bats_test }}"
+          test_command: bats tests --filter-tags ${{ matrix.bats_tag }}

@@ -85,7 +85,7 @@ teardown() {
 }
 
 
-# bats test_tags=local
+# bats test_tags=web
 @test "web functionality with custom docroot" {
   set -eu -o pipefail
   echo "# Testing web functionality with custom docroot" >&3
@@ -119,7 +119,7 @@ EOF
   health_checks
 }
 
-# bats test_tags=local
+# bats test_tags=drupal11
 @test "drupal 11 installation with php85" {
   set -eu -o pipefail
   echo "# Testing Drupal 11 installation with PHP 8.5" >&3
