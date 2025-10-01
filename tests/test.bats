@@ -73,7 +73,7 @@ teardown() {
 
 }
 
-# bats test_tags=local
+# bats test_tags=from-directory
 @test "install from directory" {
   set -eu -o pipefail
   echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
@@ -85,7 +85,7 @@ teardown() {
 }
 
 
-# bats test_tags=web
+# bats test_tags=custom-docroot
 @test "web functionality with custom docroot" {
   set -eu -o pipefail
   echo "# Testing web functionality with custom docroot" >&3
@@ -195,7 +195,7 @@ EOF
   assert_output --regexp "Welcome.*Drush Site"
 }
 
-# bats test_tags=release
+# bats test_tags=from-release
 @test "install from release" {
   set -eu -o pipefail
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3

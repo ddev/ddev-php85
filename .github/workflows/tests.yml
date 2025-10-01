@@ -32,9 +32,9 @@ jobs:
       matrix:
         ddev_version: [stable, HEAD]
         bats_tag: [
-          "local",
-          "release",
-          "web",
+          "from-directory",
+          "from-release",
+          "custom-docroot",
           "drupal11",
         ]
 
