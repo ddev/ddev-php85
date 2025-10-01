@@ -187,7 +187,7 @@ EOF
 
   # Test web access shows installed Drupal site
   echo "# Trying ddev launch" >&3
-  run ddev launch
+  run bash -c "DDEV_DEBUG=true ddev launch"
   assert_success
   echo "# curling project" >&3
   run curl -s "$(ddev st -j | jq -r .raw.primary_url)"
